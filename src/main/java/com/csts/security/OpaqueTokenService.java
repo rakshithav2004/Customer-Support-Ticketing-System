@@ -19,14 +19,12 @@ public class OpaqueTokenService {
         byte[] bytes = new byte[32];
         secureRandom.nextBytes(bytes);
         String token = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
-
         OpaqueToken opaqueToken = new OpaqueToken();
         opaqueToken.setToken(token);
         opaqueToken.setUserId(user.getId());
         opaqueToken.setRole(user.getRole().name());
         opaqueToken.setExpiresAt(LocalDateTime.now().plusMinutes(30));
         repository.save(opaqueToken);
-
         return token;
     }
     public OpaqueToken validateToken(String token) {

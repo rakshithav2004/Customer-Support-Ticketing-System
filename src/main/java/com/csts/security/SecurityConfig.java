@@ -19,29 +19,6 @@ public class SecurityConfig {
 
     @Autowired
     private OpaqueTokenFilter opaqueTokenFilter;
-//    @Bean
-//    @Order(1)  // Swagger should be first to match these URLs and allow access
-//    public SecurityFilterChain swaggerFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .securityMatcher("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/error")
-//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-//                .csrf(csrf -> csrf.disable());
-//        return http.build();
-//    }
-//
-//    @Bean
-//    @Order(2)  // Secured chain for all other endpoints
-//    public SecurityFilterChain secureFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/auth/**").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .addFilterBefore(opaqueTokenFilter, UsernamePasswordAuthenticationFilter.class);
-//        return http.build();
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
