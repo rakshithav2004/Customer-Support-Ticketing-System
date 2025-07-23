@@ -1,0 +1,23 @@
+services:
+  mongodb:
+    image: mongo:6.0.6
+    container_name: mongodb
+    ports:
+      - "27300:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    image: customersupportsystem
+    container_name: customersupport-app
+    ports:
+      - "8081:8088"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/test_db
+    restart: on-failure
+
+volumes:
+  mongo-data:
