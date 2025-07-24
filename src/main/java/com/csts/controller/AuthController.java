@@ -11,10 +11,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.token.TokenService;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -52,5 +50,14 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Login failed: "+ e.getMessage());
         }
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String header) {
+        if (header != null && header.startsWith("Bearer ")) {
+            String token = header.substring(7);
+            tokenService.invalidateToken(token);
+            return ResponseEntity.ok("Logged out successfully");
+        }
+        return ResponseEntity.badRequest().body("No token provided");
     }
 }
